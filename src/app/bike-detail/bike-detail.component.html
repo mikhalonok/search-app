@@ -1,0 +1,63 @@
+<div *ngIf="bikeDetail$ | async as bikeDetail" class="detail-page">
+
+  <div [@fadeInOut] class="container">
+    <a [routerLink]="['/bikes']" role="button" class="btn btn-default mb-4">< Back</a>
+
+    <div class="row">
+      <div class="img-wrapper col-md-6 d-flex flex-column justify-content-center align-items-center position-relative">
+        <img
+          *ngIf="bikeDetail.large_img else empty"
+          class="img-fluid"
+          [ngSrc]="bikeDetail.large_img"
+          [fill]="true"
+          [alt]="bikeDetail.title"
+          [priority]="true"
+        >
+        <ng-template #empty>
+          <img
+            class="default-img"
+            [ngSrc]="'./assets/img/bike.svg'"
+            [width]="100"
+            [height]="100"
+            [alt]="bikeDetail.title"
+          >
+        </ng-template>
+      </div>
+
+      <div class="col-md-6">
+        <div class="info">
+          <h1>{{ bikeDetail.title }}</h1>
+          <p>Brand: <span class="text-muted">{{ bikeDetail.manufacturer_name }}</span></p>
+          <p>Location: <span class="text-muted">{{ bikeDetail.location_found || 'Unknown' }}</span></p>
+          <p>Status:
+            <span
+              class="badge"
+              [ngClass]="{'bg-secondary': bikeDetail.status !== 'found', 'bg-success': bikeDetail.status === 'found'}"
+            >
+            {{ bikeDetail.status.toUpperCase() }}
+          </span>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-5">
+      <div class="col">
+        <h2>Specifications</h2>
+        <ul class="list-group">
+          <li class="list-group-item">
+            <span>Frame Colors:&nbsp;</span>
+            <span
+              *ngFor="let color of bikeDetail.frame_colors"
+              class="text-muted"
+            >
+              {{ color }}
+            </span>
+          </li>
+          <li class="list-group-item">Front Wheel Size: <span class="text-muted">{{ bikeDetail.front_wheel_size_iso_bsd }}</span></li>
+          <li class="list-group-item">Rear Wheel Size: <span class="text-muted">{{ bikeDetail.rear_wheel_size_iso_bsd }}</span></li>
+          <li class="list-group-item">Year: <span class="text-muted">{{ bikeDetail.year }}</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

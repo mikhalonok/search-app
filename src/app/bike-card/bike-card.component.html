@@ -1,0 +1,32 @@
+<div class="card h-100">
+
+  <div class="card-image-wrapper d-flex flex-column justify-content-center align-items-center">
+    <img
+      *ngIf="bike.large_img else empty"
+      class="card-image"
+      priority
+      [ngSrc]="bike.large_img"
+      [fill]="true"
+      [alt]="bike.manufacturer_name"
+    >
+
+    <ng-template #empty>
+      <img class="default-img" [ngSrc]="'./assets/img/bike.svg'" [width]="100" [height]="100" alt="Bike">
+    </ng-template>
+  </div>
+
+  <div class="card-body">
+    <h5 class="card-title">{{ bike.title }}</h5>
+    <p class="card-text">Location: {{ bike.location_found || 'Unknown' }}</p>
+    <a class="btn btn-primary" role="button" [routerLink]="['/bikes', bike.id]">See Details</a>
+  </div>
+  <div class="card-footer">
+    <small class="text-body-secondary">Status:&ngsp;</small>
+    <span
+      class="badge"
+      [ngClass]="{'bg-secondary': bike.status !== 'found', 'bg-success': bike.status === 'found'}"
+    >
+      {{ bike.status.toUpperCase() }}
+    </span>
+  </div>
+</div>

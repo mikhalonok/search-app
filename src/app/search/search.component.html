@@ -1,0 +1,36 @@
+<div class="page-wrapper">
+  <div class="container">
+    <form class="search-form" [formGroup]="searchForm" (ngSubmit)="onSubmit()">
+      <div class="row justify-content-center">
+        <div class="col-auto">
+          <input class="form-control" type="search" placeholder="City name" formControlName="searchValue">
+        </div>
+        <div class="col-auto">
+          <button type="submit" class="btn btn-primary">Search bike</button>
+        </div>
+      </div>
+    </form>
+
+    <section class="results">
+      <div class="container">
+        <div *ngIf="bikes.length; else loading" class="row">
+          <div *ngFor="let bike of bikes" class="col-4 mb-4">
+            <div class="bike-card">
+              <app-bike-card [bike]="bike"></app-bike-card>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="bikes.length >= pageSize && showLoadMore" class="row mt-5">
+          <div class="col">
+            <button class="btn btn-success w-100 btn-lg" (click)="loadMore()">Load More</button>
+          </div>
+        </div>
+
+        <ng-template #loading>
+          <p>Loading...</p>
+        </ng-template>
+      </div>
+    </section>
+  </div>
+</div>
